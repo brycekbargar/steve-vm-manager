@@ -22,7 +22,7 @@ describe('For the ChucK VM', () => {
   describe('when .start() is called', () => {
     it('expect it to resolve', () => {
       let start = this.chuck.start();
-      expect(start).to.resolve;
+      return expect(start).to.be.fulfilled;
     });
     it('expect it spawn a ChucK vm', () => {
       this.chuck.start();
