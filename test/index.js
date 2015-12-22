@@ -28,6 +28,10 @@ describe('For the ChucK VM', () => {
       this.chuck.start();
       expect(this.spawnStub).to.have.been.calledWith('chuck', ['--loop']);
     });
+    it('expect it be started', () => {
+      let start = this.chuck.start();
+      return start.then(() => expect(this.chuck.__getTestStarted()).to.be.ok);
+    });
   });
   describe('when .add() is called', () => {
     beforeEach('Start vm', () => {
