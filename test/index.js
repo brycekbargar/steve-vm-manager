@@ -30,9 +30,21 @@ describe('For the ChucK VM', () => {
     });
   });
   describe('when .add() is called', () => {
-    it('expect it to be reject if the VM isn\'t started', () => {
+    beforeEach('Start vm', () => {
+      this.chuck.__setTestStarted(true);
+    });
+    it('expect it to be rejected if the VM isn\'t started', () => {
+      this.chuck.__setTestStarted(false);
+      let add = this.chuck.add('some file');
+      return expect(add).to.be.rejected;
+    });
+    it('expect it to be rejected if the filePath is empty', () => {
       let add = this.chuck.add();
       return expect(add).to.be.rejected;
+    });
+    it('expect it to resolve', () => {
+      let add = this.chuck.add('some file');
+      return expect(add).to.be.fulfilled;
     });
   });
 });
