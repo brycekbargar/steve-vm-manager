@@ -10,4 +10,8 @@ module.exports = class VM {
       setTimeout(resolve, 500);
     });
   }
+
+  add() {
+    return Promise.reject();
+  }
 };

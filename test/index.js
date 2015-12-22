@@ -29,4 +29,10 @@ describe('For the ChucK VM', () => {
       expect(this.spawnStub).to.have.been.calledWith('chuck', ['--loop']);
     });
   });
+  describe('when .add() is called', () => {
+    it('expect it to be reject if the VM isn\'t started', () => {
+      let add = this.chuck.add();
+      return expect(add).to.be.rejected;
+    });
+  });
 });
