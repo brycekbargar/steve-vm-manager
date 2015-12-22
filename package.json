@@ -1,0 +1,30 @@
+{
+  "name": "chuck-steve-vm-manager",
+  "version": "1.0.0",
+  "description": "A node wrapper for the ChucK VM.",
+  "main": "index.js",
+  "scripts": {
+    "test": "istanbul cover _mocha; eslint index.js test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brycekbargar/steve-vm-manager.git"
+  },
+  "author": "Bryce",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/brycekbargar/steve-vm-manager/issues"
+  },
+  "homepage": "https://github.com/brycekbargar/steve-vm-manager#readme",
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "chai-as-promised": "^5.2.0",
+    "eslint": "^1.10.3",
+    "istanbul": "^0.4.1",
+    "mocha": "^2.3.4",
+    "proxyquire": "^1.7.3",
+    "sinon": "^1.17.2",
+    "sinon-as-promised": "^4.0.0",
+    "sinon-chai": "^2.8.0"
+  }
+}
