@@ -1,11 +1,32 @@
 'use strict';
+const stub = require('sinon').stub;
+const expect = require('chai')
+  .use(require('sinon-chai'))
+  .use(require('chai-as-promised'))
+  .expect;
+
+const c_p = require('child_process');
 
 const VM = require('./../index.js');
 
 describe('For the ChucK VM', () => {
+  beforeEach('Setup Spies', () => {
+    this.spawnStub = stub(c_p, 'spawn');
+  });
+  afterEach('Teardown Spies', () => {
+    c_p.spawn.restore();
+  });
   beforeEach('Setup VM', () => {
     this.chuck = new VM();
   });
-  it('expect it to be ok!', () => {
+  describe('when .start() is called', () => {
+    it('expect it to resolve', () => {
+      let start = this.chuck.start();
+      expect(start).to.resolve;
+    });
+    it('expect it spawn a ChucK vm', () => {
+      this.chuck.start();
+      expect(this.spawnStub).to.have.been.calledWith('chuck', ['--loop']);
+    });
   });
 });
