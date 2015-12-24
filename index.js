@@ -2,6 +2,7 @@
 
 const Promise = require('bluebird');
 const c_p = require('child_process');
+const exec = Promise.promisify(c_p.exec);
 
 module.exports = class VM {
   constructor() {
@@ -21,7 +22,8 @@ module.exports = class VM {
       if(!this.isStarted || !filePath) {
         return Promise.reject();
       }
-      return Promise.resolve();
+      // Is this a gaping security vulnerability?
+      return exec(`chuck --add ${filePath}`);
     };
 
     this.__setTestStarted = started => this.isStarted = started;

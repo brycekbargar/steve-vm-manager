@@ -1,5 +1,8 @@
 'use strict';
+const proxyquire = require('proxyquire').noCallThru();
+const Promise = require('bluebird');
 const stub = require('sinon').stub;
+require('sinon-as-promised')(Promise);
 const expect = require('chai')
   .use(require('sinon-chai'))
   .use(require('chai-as-promised'))
@@ -7,16 +10,23 @@ const expect = require('chai')
 
 const c_p = require('child_process');
 
-const VM = require('./../index.js');
+const proxyquireStubs = {
+  'child_process': c_p,
+  bluebird: Promise
+};
 
 describe('For the ChucK VM', () => {
   beforeEach('Setup Spies', () => {
+    (this.promisifyStub = stub(Promise, 'promisify')).returns(this.execStub = stub());
+    this.execStub.resolves();
     this.spawnStub = stub(c_p, 'spawn');
   });
   afterEach('Teardown Spies', () => {
+    Promise.promisify.restore();
     c_p.spawn.restore();
   });
   beforeEach('Setup VM', () => {
+    let VM = proxyquire('./../index.js', proxyquireStubs);
     this.chuck = new VM();
   });
   describe('when .start() is called', () => {
@@ -49,6 +59,11 @@ describe('For the ChucK VM', () => {
     it('expect it to resolve', () => {
       let add = this.chuck.add('some file');
       return expect(add).to.be.fulfilled;
+    });
+    it('expect it to add the file using exec', () => {
+      let file = 'some file';
+      this.chuck.add(file);
+      expect(this.execStub).to.have.been.calledWith(`chuck --add ${file}`);
     });
   });
 });
