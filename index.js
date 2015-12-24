@@ -23,8 +23,11 @@ module.exports = class VM {
     };
 
     this.add = filePath => {
-      if(!this.isStarted || !filePath) {
+      if(!this.isStarted) {
         return Promise.reject(new Error('The VM hasn\'t been started yet!'));
+      }
+      if(!filePath) {
+        return Promise.reject(new Error('Can\'t add an empty file!'));
       }
       // Is this a gaping security vulnerability?
       return exec(`chuck --add ${filePath}`);
