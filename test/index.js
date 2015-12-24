@@ -20,6 +20,7 @@ describe('For the ChucK VM', () => {
     (this.promisifyStub = stub(Promise, 'promisify')).returns(this.execStub = stub());
     this.execStub.resolves();
     this.spawnStub = stub(c_p, 'spawn');
+    this.spawnStub.returns({ on: () => {} });
   });
   afterEach('Teardown Spies', () => {
     Promise.promisify.restore();

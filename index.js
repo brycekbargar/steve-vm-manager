@@ -10,7 +10,11 @@ module.exports = class VM {
 
     this.start = () => {
       return new Promise(resolve => {
-        c_p.spawn('chuck', ['--loop']);
+        let chuck = c_p.spawn('chuck', ['--loop']);
+        chuck.on('error', (err) =>
+          console.log(`ChucK [error]: ${err}`));
+        chuck.on('message', (msg) =>
+          console.log(`ChucK: ${msg}`));
         setTimeout(() => {
           this.isStarted = true;
           resolve();
